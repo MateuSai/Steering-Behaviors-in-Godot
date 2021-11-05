@@ -14,13 +14,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Characters/FSM.gd"
 }, {
+"base": "State",
+"class": "IdleState",
+"language": "GDScript",
+"path": "res://Characters/IdleState.gd"
+}, {
 "base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://Characters/State.gd"
+}, {
+"base": "State",
 "class": "WalkState",
 "language": "GDScript",
 "path": "res://Characters/WalkState.gd"
 } ]
 _global_script_class_icons={
 "FSM": "",
+"IdleState": "",
+"State": "",
 "WalkState": ""
 }
 

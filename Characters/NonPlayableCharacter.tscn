@@ -1,10 +1,14 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Characters/NonPlayableCharacter.gd" type="Script" id=1]
 [ext_resource path="res://Art/heroidle.png" type="Texture" id=2]
 [ext_resource path="res://Characters/FSM.gd" type="Script" id=3]
 [ext_resource path="res://Art/hero-Sheet.png" type="Texture" id=4]
 [ext_resource path="res://Characters/WalkState.gd" type="Script" id=5]
+[ext_resource path="res://Characters/IdleState.gd" type="Script" id=6]
+[ext_resource path="res://Art/Dialogue Box.png" type="Texture" id=7]
+[ext_resource path="res://GravityBold8.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Characters/Dialogue.gd" type="Script" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -127,12 +131,19 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
+[sub_resource type="DynamicFont" id=17]
+size = 8
+font_data = ExtResource( 8 )
+
 [node name="NonPlayableCharacter" type="KinematicBody2D"]
-collision_mask = 2
+collision_mask = 3
 script = ExtResource( 1 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource( 6 )
 
 [node name="WalkState" type="Node" parent="StateMachine"]
 script = ExtResource( 5 )
@@ -152,19 +163,46 @@ anims/walk = SubResource( 16 )
 
 [node name="Raycasts" type="Node2D" parent="."]
 
+[node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
+position = Vector2( 0, -6 )
+enabled = true
+cast_to = Vector2( 48, 0 )
+collision_mask = 2
+
 [node name="RayCast2D" type="RayCast2D" parent="Raycasts"]
 enabled = true
 cast_to = Vector2( 48, 0 )
 collision_mask = 2
 
-[node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
+[node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
 position = Vector2( 0, 6 )
 enabled = true
 cast_to = Vector2( 48, 0 )
 collision_mask = 2
 
-[node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
-position = Vector2( 0, -6 )
-enabled = true
-cast_to = Vector2( 48, 0 )
-collision_mask = 2
+[node name="Dialogue" type="TextureRect" parent="."]
+visible = false
+margin_left = -24.0
+margin_top = -30.0
+margin_right = 8.0
+margin_bottom = -12.0
+texture = ExtResource( 7 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogue"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = 4.0
+margin_right = 75.0
+margin_bottom = 5.0
+rect_scale = Vector2( 0.32, 0.32 )
+custom_fonts/font = SubResource( 17 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "I'm feeling
+dizzy"
+align = 1
+valign = 1
